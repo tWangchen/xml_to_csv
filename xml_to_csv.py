@@ -126,7 +126,7 @@ def xml_to_csv(input_xml, output_csv, namespaces, xpath_list, csv_header) -> Non
     for xpath in xpath_list:
         result = tree.xpath(xpath, namespaces=namespaces)
         if result:
-            data.append(", ".join(result))
+            data.append(", ".join(result))  # Join xpath with multiple values
         else:
             data.append(None)  # Append None if XPath does not exist
     logger.info("Completed populating data.")
