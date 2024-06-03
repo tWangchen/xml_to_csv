@@ -226,8 +226,8 @@ def xml_to_data(input_xml, namespaces, xpath_list) -> list:
     return data
 
 
-def data_to_csv(data, output_csv) -> None:
-    csv_headers = [xpath[1] for xpath in XPATH_LIST]
+def data_to_csv(xpath_list, data, output_csv) -> None:
+    csv_headers = [xpath[1] for xpath in xpath_list]
     df = pd.DataFrame(data, columns=csv_headers)
     df.to_csv(output_csv, index=False, encoding='utf-8')
 
@@ -252,7 +252,7 @@ def main() -> None:
                 except Exception as e:
                     logger.exception(f"Error processing metadata_id {metadata["id"]}")
                         
-        data_to_csv(data=data_full, output_csv=OUTPUT_FILE)
+        data_to_csv(xpath_list=XPATH_LIST, data=data_full, output_csv=OUTPUT_FILE)
 
         logger.info(f"Completed {index+1} rows in {time.perf_counter() - start:0.2f} seconds.")
     except Exception as e:
