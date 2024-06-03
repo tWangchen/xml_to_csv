@@ -256,8 +256,7 @@ def main() -> None:
 
         logger.info(f"Completed {index+1} rows in {time.perf_counter() - start:0.2f} seconds.")
     except Exception as e:
-        logger.exception(f"Error processing {INPUT_FILE}.")
-        raise e
+        logger.exception(f"Error processing {INPUT_FILE}: {e}") 
    
 
 if __name__ == "__main__":

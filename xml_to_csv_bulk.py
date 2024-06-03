@@ -224,7 +224,7 @@ def xml_to_data(input_xml, namespaces, xpath_list) -> list:
     return data
 
 
-def data_to_csv(xpath_list, data, output_csv):
+def data_to_csv(xpath_list, data, output_csv) -> None:
     csv_headers = [xpath[1] for xpath in xpath_list]
     with open(output_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
@@ -232,7 +232,7 @@ def data_to_csv(xpath_list, data, output_csv):
         writer.writerows(data)
 
 
-def main():
+def main() -> None:
     try:
         start = time.perf_counter()
         logger.info(f"Start processing {INPUT_FILE}...")
@@ -264,8 +264,7 @@ def main():
             f"Completed {index+1} rows in {time.perf_counter() - start:0.2f} seconds."
         )
     except Exception as e:
-        logger.exception(f"Error processing {INPUT_FILE}.")
-        raise e
+        logger.exception(f"Error processing {INPUT_FILE}: {e}")
 
 
 if __name__ == "__main__":
