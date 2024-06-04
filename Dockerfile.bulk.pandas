@@ -1,0 +1,14 @@
+FROM python:3.12.3
+
+
+WORKDIR /app
+
+COPY requirements-pandas.txt .
+RUN pip install -r requirements-pandas.txt
+
+COPY xml_to_csv_bulk_pandas.py .
+
+# Directory to mount volume
+RUN mkdir -p /app/downloads
+
+CMD [ "python", "xml_to_csv_bulk_pandas.py" ]
