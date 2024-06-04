@@ -9,12 +9,12 @@ from lxml import etree
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s: %(levelname)s:%(name)s: %(message)s")
-file_handler = logging.FileHandler("xml_to_csv_bulk.log")
+file_handler = logging.FileHandler("./downloads/xml_to_csv_bulk.log")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
-INPUT_FILE = f"./downloads/metadata_full.csv"
-OUTPUT_FILE = f"./downloads/ecat-complete.csv"
+INPUT_FILE = f"./downloads/metadata-dump-input.csv"
+OUTPUT_FILE = f"./downloads/metadata-converted-output.csv"
 
 NAMESPACES = {
     "cit": "http://standards.iso.org/iso/19115/-3/cit/1.0",
