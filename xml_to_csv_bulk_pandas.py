@@ -13,7 +13,7 @@ file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 # Define the chunk size (number of rows to process at a time)
-CHUNKSIZE = 50000
+CHUNKSIZE = 10000
 
 INPUT_FILE = f"./downloads/metadata-dump-input.csv"
 OUTPUT_FILE = f"./downloads/metadata-converted-output.csv"
