@@ -227,7 +227,7 @@ def xml_to_data(input_xml, namespaces, xpath_list) -> list:
 def data_to_csv(xpath_list, data, output_csv) -> None:
     csv_headers = [xpath[1] for xpath in xpath_list]
     with open(output_csv, "w", newline="", encoding="utf-8") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
         writer.writerow(csv_headers)
         writer.writerows(data)
 

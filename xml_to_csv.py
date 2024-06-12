@@ -11,8 +11,8 @@ file_handler = logging.FileHandler("xml_to_csv.log")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
-INPUT_XML = "ecat_145182.input.xml"
-OUTPUT_CSV = "ecat_145182.output.csv"
+INPUT_XML = "ecat_line_break_144528.input.xml"
+OUTPUT_CSV = "ecat_line_break_quoteall_144528.output.csv"
 
 NAMESPACES = {
     "cit": "http://standards.iso.org/iso/19115/-3/cit/1.0",
@@ -212,7 +212,7 @@ def xml_to_csv(input_xml, output_csv, namespaces, xpath_list) -> None:
     logger.info("Start writing to data to csv ...")
     with open(output_csv, "w", newline="", encoding="utf-8") as f:
         csv_header = [xpath[1] for xpath in xpath_list]
-        writer = csv.writer(f)
+        writer = csv.writer(f, quoting=csv.QUOTE_ALL)
         writer.writerow(csv_header)
         writer.writerow(data)
     logger.info("Completed writing data to csv.")

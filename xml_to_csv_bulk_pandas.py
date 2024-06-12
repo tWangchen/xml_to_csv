@@ -1,3 +1,4 @@
+import csv
 import logging
 import time
 
@@ -229,7 +230,7 @@ def xml_to_data(input_xml, namespaces, xpath_list) -> list:
 def data_to_csv(xpath_list, data, output_csv) -> None:
     csv_headers = [xpath[1] for xpath in xpath_list]
     df = pd.DataFrame(data, columns=csv_headers)
-    df.to_csv(output_csv, index=False, encoding='utf-8')
+    df.to_csv(output_csv, index=False, encoding='utf-8', quoting=csv.QUOTE_ALL)
 
 
 def main() -> None:
