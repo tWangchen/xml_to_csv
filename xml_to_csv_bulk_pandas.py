@@ -19,17 +19,17 @@ INPUT_FILE = f"./downloads/metadata-dump-input.csv"
 OUTPUT_FILE = f"./downloads/metadata-converted-output.csv"
 
 NAMESPACES = {
-    "cit": "http://standards.iso.org/iso/19115/-3/cit/1.0",
+    "cit": "http://standards.iso.org/iso/19115/-3/cit/2.0",
     "gco": "http://standards.iso.org/iso/19115/-3/gco/1.0",
     "gex": "http://standards.iso.org/iso/19115/-3/gex/1.0",
     "mcc": "http://standards.iso.org/iso/19115/-3/mcc/1.0",
     "mco": "http://standards.iso.org/iso/19115/-3/mco/1.0",
-    "mdb": "http://standards.iso.org/iso/19115/-3/mdb/1.0",
+    "mdb": "http://standards.iso.org/iso/19115/-3/mdb/2.0",
     "mrd": "http://standards.iso.org/iso/19115/-3/mrd/1.0",
     "mri": "http://standards.iso.org/iso/19115/-3/mri/1.0",
-    "mrl": "http://standards.iso.org/iso/19115/-3/mrl/1.0",
+    "mrl": "http://standards.iso.org/iso/19115/-3/mrl/2.0",
     "mmi": "http://standards.iso.org/iso/19115/-3/mmi/1.0",
-    "srv": "http://standards.iso.org/iso/19115/-3/srv/2.0",
+    "srv": "http://standards.iso.org/iso/19115/-3/srv/2.1",
 }
 
 XPATH_LIST = [
@@ -229,14 +229,14 @@ def xml_to_data(input_xml, namespaces, xpath_list) -> list:
 def data_to_csv(xpath_list, data, output_csv) -> None:
     csv_headers = [xpath[1] for xpath in xpath_list]
     df = pd.DataFrame(data, columns=csv_headers)
-    df.to_csv(output_csv, index=False, encoding='utf-8')
+    df.to_csv(output_csv, index=False, encoding="utf-8")
 
 
 def main() -> None:
     try:
         start = time.perf_counter()
         logger.info(f"Start processing {INPUT_FILE}...")
-        
+
         data_full = []
         for chunk in pd.read_csv(INPUT_FILE, chunksize=CHUNKSIZE, low_memory=False):
             for index, metadata in chunk.iterrows():
@@ -251,13 +251,15 @@ def main() -> None:
                     logger.info(f"Completed processing metadata_id: {metadata["id"]}")
                 except Exception as e:
                     logger.exception(f"Error processing metadata_id {metadata["id"]}")
-                        
+
         data_to_csv(xpath_list=XPATH_LIST, data=data_full, output_csv=OUTPUT_FILE)
 
-        logger.info(f"Completed {index+1} rows in {time.perf_counter() - start:0.2f} seconds.")
+        logger.info(
+            f"Completed {index+1} rows in {time.perf_counter() - start:0.2f} seconds."
+        )
     except Exception as e:
-        logger.exception(f"Error processing {INPUT_FILE}: {e}") 
-   
+        logger.exception(f"Error processing {INPUT_FILE}: {e}")
+
 
 if __name__ == "__main__":
     main()
