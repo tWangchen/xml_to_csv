@@ -15,8 +15,8 @@ logger.addHandler(file_handler)
 # Define the chunk size (number of rows to process at a time)
 CHUNKSIZE = 10000
 
-INPUT_FILE = f"./downloads/metadata-dump-input.csv"
-OUTPUT_FILE = f"./downloads/metadata-converted-output.csv"
+INPUT_FILE = f"./downloads/metadata-dump-prod.csv"
+OUTPUT_FILE = f"./downloads/metadata-dump-prod-output.csv"
 
 NAMESPACES = {
     "cit": "http://standards.iso.org/iso/19115/-3/cit/2.0",
@@ -70,6 +70,10 @@ XPATH_LIST = [
         "rolecodes_citation_name",
     ),
     (
+        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:citedResponsibleParty/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Organisation[1]/cit:name[1]/gco:CharacterString[1]/text()",
+        "rolecodes_citation_organisation",
+    ),
+    (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:pointOfContact[2]/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Individual[1]/cit:name[1]/gco:CharacterString[1]/text()",
         "pointofcontact_name",
     ),
@@ -82,12 +86,20 @@ XPATH_LIST = [
         "pointofcontact_value",
     ),
     (
+        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:pointOfContact[1]/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Organisation[1]/cit:name[1]/gco:CharacterString[1]/text()",
+        "pointofcontact_organisation",
+    ),
+    (
         "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility[1]/cit:role[1]/cit:CI_RoleCode[1]/@codeListValue",
         "metadata_contact_role",
     ),
     (
         "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Individual[1]/cit:name[1]/gco:CharacterString[1]/text()",
         "metadata_contact_value",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:contact[1]/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Organisation[1]/cit:name[1]/gco:CharacterString[1]/text()",
+        "metadata_contact_organisation",
     ),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[1]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
@@ -101,7 +113,6 @@ XPATH_LIST = [
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
         "doi",
     ),
-    # ("//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:abstract[1]/gco:CharacterString[1]/text()", "abstract"),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:otherConstraints[1]/gco:CharacterString[1]/text()",
         "copyright_statement",
@@ -198,6 +209,10 @@ XPATH_LIST = [
     (
         "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions[2]/mrd:MD_DigitalTransferOptions[1]/mrd:onLine[1]/cit:CI_OnlineResource[1]/cit:description[1]/gco:CharacterString[1]/text()",
         "label_description",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:abstract[1]/gco:CharacterString[1]/text()",
+        "abstract",
     ),
 ]
 
