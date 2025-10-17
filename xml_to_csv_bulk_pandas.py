@@ -61,54 +61,54 @@ XPATH_LIST = [
         "/mdb:MD_Metadata/mdb:metadataScope[1]/mdb:MD_MetadataScope[1]/mdb:name[1]/gco:CharacterString[1]/text()",
         "scopecodename",
     ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:citedResponsibleParty/cit:CI_Responsibility[1]/cit:role[1]/cit:CI_RoleCode[1]/@codeListValue",
-        "rolecodes_citation_role",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:citedResponsibleParty/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Individual[1]/cit:name[1]/gco:CharacterString[1]/text()",
-        "rolecodes_citation_name",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:citedResponsibleParty/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Organisation[1]/cit:name[1]/gco:CharacterString[1]/text()",
-        "rolecodes_citation_organisation",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:pointOfContact[2]/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Individual[1]/cit:name[1]/gco:CharacterString[1]/text()",
-        "pointofcontact_name",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:pointOfContact/cit:CI_Responsibility[1]/cit:role[1]/cit:CI_RoleCode[1]/@codeListValue",
-        "pointofcontact_role",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:pointOfContact[3]/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Individual[1]/cit:name[1]/gco:CharacterString[1]/text()",
-        "pointofcontact_value",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:pointOfContact[1]/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Organisation[1]/cit:name[1]/gco:CharacterString[1]/text()",
-        "pointofcontact_organisation",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility[1]/cit:role[1]/cit:CI_RoleCode[1]/@codeListValue",
-        "metadata_contact_role",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Individual[1]/cit:name[1]/gco:CharacterString[1]/text()",
-        "metadata_contact_value",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:contact[1]/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Organisation[1]/cit:name[1]/gco:CharacterString[1]/text()",
-        "metadata_contact_organisation",
-    ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:citedResponsibleParty/cit:CI_Responsibility[1]/cit:role[1]/cit:CI_RoleCode[1]/@codeListValue",
+    #     "rolecodes_citation_role",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:citedResponsibleParty/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Individual[1]/cit:name[1]/gco:CharacterString[1]/text()",
+    #     "rolecodes_citation_value",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:citedResponsibleParty/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Organisation[1]/cit:name[1]/gco:CharacterString[1]/text()",
+    #     "rolecodes_citation_organisation",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:pointOfContact[2]/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Individual[1]/cit:name[1]/gco:CharacterString[1]/text()",
+    #     "pointofcontact_name",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:pointOfContact/cit:CI_Responsibility[1]/cit:role[1]/cit:CI_RoleCode[1]/@codeListValue",
+    #     "pointofcontact_role",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:pointOfContact[3]/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Individual[1]/cit:name[1]/gco:CharacterString[1]/text()",
+    #     "pointofcontact_value",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:pointOfContact[1]/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Organisation[1]/cit:name[1]/gco:CharacterString[1]/text()",
+    #     "pointofcontact_organisation",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility[1]/cit:role[1]/cit:CI_RoleCode[1]/@codeListValue",
+    #     "metadata_contact_role",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Individual[1]/cit:name[1]/gco:CharacterString[1]/text()",
+    #     "metadata_contact_value",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:contact[1]/cit:CI_Responsibility[1]/cit:party[1]/cit:CI_Organisation[1]/cit:name[1]/gco:CharacterString[1]/text()",
+    #     "metadata_contact_organisation",
+    # ),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[1]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
         "pid",
     ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:pointOfContact[3]/cit:CI_Responsibility[1]/cit:role[1]/cit:CI_RoleCode[1]/@codeListValue",
-        "resource_provider",
-    ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:pointOfContact[3]/cit:CI_Responsibility[1]/cit:role[1]/cit:CI_RoleCode[1]/@codeListValue",
+    #     "resource_provider",
+    # ),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
         "doi",
@@ -213,6 +213,30 @@ XPATH_LIST = [
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:abstract[1]/gco:CharacterString[1]/text()",
         "abstract",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:role/cit:CI_RoleCode/@codeListValue",
+        "pointofcontact_role",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()",
+        "pointofcontact_value",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:role/cit:CI_RoleCode/@codeListValue",
+        "metadata_contact_role",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()",
+        "metadata_contact_value",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:citedResponsibleParty/cit:CI_Responsibility/cit:role/cit:CI_RoleCode/@codeListValue",
+        "rolecodes_citation_role",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:citedResponsibleParty/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()",
+        "rolecodes_citation_value",
     ),
 ]
 
