@@ -197,7 +197,7 @@ XPATH_LIST = [
         "/mdb:MD_Metadata/mdb:metadataIdentifier/mcc:MD_Identifier/mcc:code/gco:CharacterString/text()",
         "uuid",
     ),
-    # Long text fields after this line. These may have challenges during Opensearch ingestion.
+    # Long text fields after this line.
     (
         "/mdb:MD_Metadata/mdb:identificationInfo/*/mri:abstract/gco:CharacterString/text()",
         "abstract",
