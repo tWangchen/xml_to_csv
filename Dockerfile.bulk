@@ -1,14 +1,15 @@
-FROM python:3.12.3
+FROM python:3.14.0-slim-bookworm
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 
 WORKDIR /app
 
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
 COPY xml_to_csv_bulk.py .
+COPY config.py .
+COPY *.toml .
+COPY uv.lock .
 
 # Directory to mount volume
 RUN mkdir -p /app/downloads
 
-CMD [ "python", "xml_to_csv_bulk.py" ]
+CMD [ "uv", "run", "xml_to_csv_bulk.py" ]
