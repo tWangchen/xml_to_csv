@@ -1,5 +1,5 @@
 INPUT_FILE = f"./downloads/metadata-dump-prod.csv"
-OUTPUT_FILE = f"./downloads/metadata-dump-prod-output.csv"
+OUTPUT_FILE = f"./downloads/metadata-dump-prod-output-14-10.csv"
 
 # XPath expressions and namespaces for parsing ISO 19115-3 metadata XML files
 # Note: Attempting to keep it minimal and clean, I may not have the complete namespace.
@@ -29,10 +29,6 @@ XPATH_LIST = [
         "title",
     ),
     (
-        "//mdb:MD_Metadata/mdb:metadataScope[1]/mdb:MD_MetadataScope[1]/mdb:resourceScope[1]/mcc:MD_ScopeCode[1]/@codeListValue",
-        "metadatascopecode",
-    ),
-    (
         "/mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceFormat[1]/mrd:MD_Format[1]/mrd:formatSpecificationCitation[1]/cit:CI_Citation[1]/cit:onlineResource[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()",
         "datastoragelink",
     ),
@@ -45,16 +41,25 @@ XPATH_LIST = [
         "distributionlink",
     ),
     (
-        "/mdb:MD_Metadata/mdb:metadataScope[1]/mdb:MD_MetadataScope[1]/mdb:name[1]/gco:CharacterString[1]/text()",
+        "/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode[1]/@codeListValue",
+        "metadatascopecode",
+    ),
+    (
+        "/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:name/gco:CharacterString/text()",
         "scopecodename",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[1]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
+        "/mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[1]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
         "pid",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
+        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
         "doi",
+    ),
+    # TODO: this should be deleted later
+    (
+        "/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gco:CharacterString/text()",
+        "identifiers_delete_later",
     ),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:otherConstraints[1]/gco:CharacterString[1]/text()",
@@ -65,11 +70,11 @@ XPATH_LIST = [
         "copyright_use_constraints",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:status[1]/mcc:MD_ProgressCode[1]/@codeListValue",
+        "/mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:purpose[1]/gco:CharacterString[1]/text()",
         "purpose",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:status[1]/mcc:MD_ProgressCode[1]/@codeListValue",
+        "/mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:status[1]/mcc:MD_ProgressCode[1]/@codeListValue",
         "status",
     ),
     (
