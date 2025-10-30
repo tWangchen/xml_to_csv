@@ -1,5 +1,5 @@
-INPUT_FILE = f"./downloads/metadata-dump-prod.csv"
-OUTPUT_FILE = f"./downloads/metadata-dump-prod-output-14-10.csv"
+INPUT_FILE = f"./downloads/metadata-dump-prod-10-record.csv"
+OUTPUT_FILE = f"./downloads/metadata-dump-prod-output-8.csv"
 
 # XPath expressions and namespaces for parsing ISO 19115-3 metadata XML files
 # Note: Attempting to keep it minimal and clean, I may not have the complete namespace.
@@ -56,11 +56,6 @@ XPATH_LIST = [
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
         "doi",
     ),
-    # TODO: this should be deleted later
-    (
-        "/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gco:CharacterString/text()",
-        "identifiers_delete_later",
-    ),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:otherConstraints[1]/gco:CharacterString[1]/text()",
         "copyright_statement",
@@ -92,22 +87,6 @@ XPATH_LIST = [
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:northBoundLatitude[1]/gco:Decimal[1]/text()",
         "geographicalextent_north",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:title[1]/gco:CharacterString[1]/text()",
-        "license_title",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:alternateTitle[1]/gco:CharacterString[1]/text()",
-        "license_alternatetitle",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:edition[1]/gco:CharacterString[1]/text()",
-        "license_edition",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:onlineResource[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()",
-        "license_onlineurl",
     ),
     (
         "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions[1]/mrd:onLine[1]/cit:CI_OnlineResource[1]/cit:name[1]/gco:CharacterString[1]/text()",
@@ -201,6 +180,13 @@ XPATH_LIST = [
     (
         "/mdb:MD_Metadata/mdb:metadataIdentifier/mcc:MD_Identifier/mcc:code/gco:CharacterString/text()",
         "uuid",
+    ),
+    (
+        """//mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints[1]/mco:MD_LegalConstraints/mco:reference/cit:CI_Citation/*/gco:CharacterString/text() 
+        |
+        //mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:onlineResource[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()
+        """,
+        "license",
     ),
     # Long text fields after this line.
     (
