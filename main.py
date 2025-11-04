@@ -3,13 +3,14 @@ import time
 
 import pandas as pd
 from lxml import etree
+
 import config
 
 # Logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s: %(levelname)s:%(name)s: %(message)s")
-file_handler = logging.FileHandler("./downloads/xml_to_csv_bulk_pandas.log")
+file_handler = logging.FileHandler("./downloads/xml_to_csv.log")
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
@@ -58,7 +59,7 @@ def main() -> None:
         data_full = []
         for chunk in pd.read_csv(INPUT_FILE, chunksize=CHUNKSIZE, low_memory=False):
             for index, metadata in chunk.iterrows():
-                logger.info(f"Processing metadata_id: {metadata["id"]}")
+                logger.info(f"Processing metadata_id: {metadata['id']}")
                 try:
                     data = xml_to_data(
                         input_xml=metadata["data"],
@@ -66,16 +67,18 @@ def main() -> None:
                         xpath_list=config.XPATH_LIST,
                     )
                     data_full.append(data)
-                    logger.info(f"Completed processing metadata_id: {metadata["id"]}")
+                    logger.info(f"Completed processing metadata_id: {metadata['id']}")
                 except Exception as e:
-                    logger.exception(f"Error processing metadata_id {metadata["id"]}")
+                    logger.exception(
+                        f"Error processing metadata_id {metadata['id']}: {e}"
+                    )
 
         data_to_csv(
             xpath_list=config.XPATH_LIST, data=data_full, output_csv=OUTPUT_FILE
         )
 
         logger.info(
-            f"Completed {index+1} rows in {time.perf_counter() - start:0.2f} seconds."
+            f"Completed {index + 1} rows in {time.perf_counter() - start:0.2f} seconds."
         )
     except Exception as e:
         logger.exception(f"Error processing {INPUT_FILE}: {e}")

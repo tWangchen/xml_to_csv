@@ -1,5 +1,5 @@
-INPUT_FILE = f"./downloads/metadata-dump-prod-10-record.csv"
-OUTPUT_FILE = f"./downloads/metadata-dump-prod-output-8.csv"
+INPUT_FILE = "./downloads/metadata-dump-prod-10-record.csv"
+OUTPUT_FILE = "./downloads/metadata-dump-prod-output-8.csv"
 
 # XPath expressions and namespaces for parsing ISO 19115-3 metadata XML files
 # Note: Attempting to keep it minimal and clean, I may not have the complete namespace.
