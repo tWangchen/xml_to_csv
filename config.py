@@ -29,7 +29,7 @@ XPATH_LIST = [
         "title",
     ),
     (
-        "/mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceFormat[1]/mrd:MD_Format[1]/mrd:formatSpecificationCitation[1]/cit:CI_Citation[1]/cit:onlineResource[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()",
+        "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceFormat/mrd:MD_Format/mrd:formatSpecificationCitation/cit:CI_Citation/cit:onlineResource/cit:CI_OnlineResource/cit:linkage/gco:CharacterString/text()",
         "datastoragelink",
     ),
     (
@@ -57,7 +57,7 @@ XPATH_LIST = [
         "doi",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:otherConstraints[1]/gco:CharacterString[1]/text()",
+        "//mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints/mco:MD_LegalConstraints/mco:otherConstraints/gco:CharacterString/text()",
         "copyright_statement",
     ),
     (
@@ -72,22 +72,22 @@ XPATH_LIST = [
         "/mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:status[1]/mcc:MD_ProgressCode[1]/@codeListValue",
         "status",
     ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:westBoundLongitude[1]/gco:Decimal[1]/text()",
-        "geographicalextent_west",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:eastBoundLongitude[1]/gco:Decimal[1]/text()",
-        "geographicalextent_east",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:southBoundLatitude[1]/gco:Decimal[1]/text()",
-        "geographicalextent_south",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:northBoundLatitude[1]/gco:Decimal[1]/text()",
-        "geographicalextent_north",
-    ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:westBoundLongitude[1]/gco:Decimal[1]/text()",
+    #     "geographicalextent_west",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:eastBoundLongitude[1]/gco:Decimal[1]/text()",
+    #     "geographicalextent_east",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:southBoundLatitude[1]/gco:Decimal[1]/text()",
+    #     "geographicalextent_south",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:northBoundLatitude[1]/gco:Decimal[1]/text()",
+    #     "geographicalextent_north",
+    # ),
     (
         "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions[1]/mrd:onLine[1]/cit:CI_OnlineResource[1]/cit:name[1]/gco:CharacterString[1]/text()",
         "distribution_name",
@@ -100,18 +100,18 @@ XPATH_LIST = [
         "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions[1]/mrd:distributionFormat[1]/mrd:MD_Format[1]/mrd:formatSpecificationCitation[1]/cit:CI_Citation[1]/cit:title[1]/gco:CharacterString[1]/text()",
         "distribution_format",
     ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:associatedResource/mri:MD_AssociatedResource[1]/mri:associationType[1]/mri:DS_AssociationTypeCode[1]/@codeListValue",
-        "associatedresources_type",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:associatedResource/mri:MD_AssociatedResource[1]/mri:metadataReference[1]/cit:CI_Citation[1]/cit:identifier[1]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
-        "associatedresources_ecatid",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:associatedResource/mri:MD_AssociatedResource[1]/mri:metadataReference[1]/cit:CI_Citation[1]/cit:title[1]/gco:CharacterString[1]/text()",
-        "associatedresources_ecat_title",
-    ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:associatedResource/mri:MD_AssociatedResource[1]/mri:associationType[1]/mri:DS_AssociationTypeCode[1]/@codeListValue",
+    #     "associatedresources_type",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:associatedResource/mri:MD_AssociatedResource[1]/mri:metadataReference[1]/cit:CI_Citation[1]/cit:identifier[1]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
+    #     "associatedresources_ecatid",
+    # ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:associatedResource/mri:MD_AssociatedResource[1]/mri:metadataReference[1]/cit:CI_Citation[1]/cit:title[1]/gco:CharacterString[1]/text()",
+    #     "associatedresources_ecat_title",
+    # ),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:resourceMaintenance[1]/mmi:MD_MaintenanceInformation[1]/mmi:maintenanceAndUpdateFrequency[1]/mmi:MD_MaintenanceFrequencyCode[1]/@codeListValue",
         "maintenance_frequency",
@@ -187,6 +187,21 @@ XPATH_LIST = [
         //mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:onlineResource[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()
         """,
         "license",
+    ),
+    (
+        "/mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicBoundingBox/*/gco:Decimal/text()",
+        "geographicalextent_w_e_s_n",
+    ),
+    # Combined XPath for associated resources
+    (
+        """
+        //mdb:MD_Metadata/mdb:identificationInfo/*/mri:associatedResource/mri:MD_AssociatedResource/mri:associationType/mri:DS_AssociationTypeCode/@codeListValue
+        |
+        //mdb:MD_Metadata/mdb:identificationInfo/*/mri:associatedResource/mri:MD_AssociatedResource/mri:metadataReference/cit:CI_Citation/cit:title/gco:CharacterString/text()
+        |
+        //mdb:MD_Metadata/mdb:identificationInfo/*/mri:associatedResource/mri:MD_AssociatedResource/mri:metadataReference/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gco:CharacterString/text()
+        """,
+        "associatedresources_type_title_ecatid_uuid",
     ),
     # Long text fields after this line.
     (
