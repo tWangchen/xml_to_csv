@@ -73,16 +73,8 @@ XPATH_LIST = [
         "status",
     ),
     (
-        "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions[1]/mrd:onLine[1]/cit:CI_OnlineResource[1]/cit:name[1]/gco:CharacterString[1]/text()",
-        "distribution_name",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions[1]/mrd:onLine[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()",
-        "distribution_url",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions[1]/mrd:distributionFormat[1]/mrd:MD_Format[1]/mrd:formatSpecificationCitation[1]/cit:CI_Citation[1]/cit:title[1]/gco:CharacterString[1]/text()",
-        "distribution_format",
+        "//mdb:MD_Metadata/mdb:distributionInfo/mrd:MD_Distribution/mrd:distributor/mrd:MD_Distributor/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions/mrd:onLine//gco:CharacterString/text()",
+        "distribution_info",
     ),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:resourceMaintenance[1]/mmi:MD_MaintenanceInformation[1]/mmi:maintenanceAndUpdateFrequency[1]/mmi:MD_MaintenanceFrequencyCode[1]/@codeListValue",
@@ -94,45 +86,36 @@ XPATH_LIST = [
         |
         //mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/cit:CI_Citation/cit:date/cit:CI_Date/cit:dateType/cit:CI_DateTypeCode/@codeListValue
         """,
-        "date_and_type",
+        "resource_dates",
     ),
     (
         "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions[2]/mrd:MD_DigitalTransferOptions[1]/mrd:onLine[1]/cit:CI_OnlineResource[1]/cit:description[1]/gco:CharacterString[1]/text()",
         "label_description",
     ),
     # New XPaths added below
-    # (
-    #     "//mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:role/cit:CI_RoleCode/@codeListValue",
-    #     "pointofcontact_role",
-    # ),
-    # (
-    #     "//mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()",
-    #     "pointofcontact_value",
-    # ),
-    # (
-    #     "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:role/cit:CI_RoleCode/@codeListValue",
-    #     "metadata_contact_role",
-    # ),
-    # (
-    #     "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()",
-    #     "metadata_contact_value",
-    # ),
-    # (
-    #     "//mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:citedResponsibleParty/cit:CI_Responsibility/cit:role/cit:CI_RoleCode/@codeListValue",
-    #     "rolecodes_citation_role",
-    # ),
-    # (
-    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:citedResponsibleParty/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()",
-    #     "rolecodes_citation_value",
-    # ),
-    # combined contacts
     (
-        """
-        /mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/cit:CI_Citation/cit:citedResponsibleParty/cit:CI_Responsibility/cit:role/cit:CI_RoleCode/@codeListValue
-        |
-        /mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/cit:CI_Citation/cit:citedResponsibleParty/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()
-        """,
-        "citation_details",
+        "//mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:role/cit:CI_RoleCode/@codeListValue",
+        "pointofcontact_role",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()",
+        "pointofcontact_value",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:role/cit:CI_RoleCode/@codeListValue",
+        "metadata_contact_role",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()",
+        "metadata_contact_value",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:citedResponsibleParty/cit:CI_Responsibility/cit:role/cit:CI_RoleCode/@codeListValue",
+        "rolecodes_citation_role",
+    ),
+    (
+        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:citedResponsibleParty/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()",
+        "rolecodes_citation_value",
     ),
     (
         "/mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/cit:CI_Citation/cit:series/cit:CI_Series/cit:name/gco:CharacterString/text()",
