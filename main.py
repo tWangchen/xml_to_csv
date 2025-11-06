@@ -38,7 +38,7 @@ def xml_to_data(input_xml, namespaces, xpath_list) -> list:
     for xpath, field in xpath_list:
         result = xml_tree.xpath(xpath, namespaces=namespaces)
         if result:
-            data.append(", ".join(result))  # Join xpath with multiple values
+            data.append("; ".join(result))  # Join xpath with multiple values
         else:
             data.append(None)  # Append None if XPath does not exist
 
