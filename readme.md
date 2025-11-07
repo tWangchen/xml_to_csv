@@ -10,7 +10,7 @@
 ## Usage
 
 ### Configure input parameters in the code:
-- `INPUT_FILE`: Path to the input XML file(s)  
+- `INPUT_FILE`: Path to the input XML dump flat-file  
 - `OUTPUT_FILE`: Path to the output CSV file  
 - `NAMESPACES`: Dictionary mapping namespace prefixes to URIs  
 - `XPATH_LIST`: List of tuples containing XPath expressions and field names  

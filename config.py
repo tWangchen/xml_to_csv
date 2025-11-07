@@ -54,14 +54,14 @@ XPATH_LIST = [
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
         "doi",
     ),
-    (
-        "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gcx:Anchor/text()",
-        "doi_alternate_1",
-    ),
-    (
-        "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gcx:Anchor/@xlink:href",
-        "doi_alternate_2",
-    ),
+    # (
+    #     "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gcx:Anchor/text()",
+    #     "doi_alternate_1",
+    # ),
+    # (
+    #     "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gcx:Anchor/@xlink:href",
+    #     "doi_alternate_2",
+    # ),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints/mco:MD_LegalConstraints/mco:otherConstraints/gco:CharacterString/text()",
         "copyright_statement",
