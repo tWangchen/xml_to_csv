@@ -17,6 +17,8 @@ NAMESPACES = {
     "mmi": "http://standards.iso.org/iso/19115/-3/mmi/1.0",
     "srv": "http://standards.iso.org/iso/19115/-3/srv/2.1",
     "mrs": "http://standards.iso.org/iso/19115/-3/mrs/1.0",
+    "gcx": "http://standards.iso.org/iso/19115/-3/gcx/1.0",
+    "xlink": "http://www.w3.org/1999/xlink",
 }
 
 XPATH_LIST = [
@@ -37,10 +39,6 @@ XPATH_LIST = [
         "keywords",
     ),
     (
-        "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions[1]/mrd:onLine[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()",
-        "distributionlink",
-    ),
-    (
         "/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode[1]/@codeListValue",
         "metadatascopecode",
     ),
@@ -55,6 +53,14 @@ XPATH_LIST = [
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
         "doi",
+    ),
+    (
+        "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gcx:Anchor/text()",
+        "doi_alternate_1",
+    ),
+    (
+        "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gcx:Anchor/@xlink:href",
+        "doi_alternate_2",
     ),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints/mco:MD_LegalConstraints/mco:otherConstraints/gco:CharacterString/text()",
@@ -73,7 +79,11 @@ XPATH_LIST = [
         "status",
     ),
     (
-        "//mdb:MD_Metadata/mdb:distributionInfo/mrd:MD_Distribution/mrd:distributor/mrd:MD_Distributor/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions/mrd:onLine//gco:CharacterString/text()",
+        "//mdb:distributionInfo//mrd:MD_DigitalTransferOptions//cit:linkage/gco:CharacterString/text()",
+        "distributionlink",
+    ),
+    (
+        "//mdb:distributionInfo//mrd:MD_DigitalTransferOptions//gco:CharacterString/text()",
         "distribution_info",
     ),
     (
