@@ -1,5 +1,14 @@
-INPUT_FILE = "./downloads/metadata-dump-10-records.csv"
-OUTPUT_FILE = "./downloads/metadata-dump-10-records-output.csv"
+from pathlib import Path
+
+CHUNKSIZE = 10000
+
+DATA_DIR = Path(__file__).resolve().parent / "downloads"
+# Change this to your input dump flat-file(CSV) file path
+INPUT_FILE = DATA_DIR / "metadata-dump-10-records.csv"
+# Optionally change this to your output CSV file path
+OUTPUT_FILE = DATA_DIR / "metadata-dump-transformed-output.csv"
+
+LOG_FILE = DATA_DIR / "xml_to_csv.log"
 
 # XPath expressions and namespaces for parsing ISO 19115-3 metadata XML files
 # Note: Attempting to keep it minimal and clean, I may not have the complete namespace.

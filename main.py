@@ -6,16 +6,19 @@ from lxml import etree
 
 import config
 
+# Ensure data directory exists
+config.DATA_DIR.mkdir(parents=True, exist_ok=True)
+
 # Logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 formatter = logging.Formatter("%(asctime)s: %(levelname)s:%(name)s: %(message)s")
-file_handler = logging.FileHandler("./downloads/xml_to_csv.log")
+file_handler = logging.FileHandler(config.LOG_FILE)
 file_handler.setFormatter(formatter)
 logger.addHandler(file_handler)
 
 # Define the chunk size (number of rows to process at a time)
-CHUNKSIZE = 10000
+CHUNKSIZE = config.CHUNKSIZE
 
 INPUT_FILE = config.INPUT_FILE
 OUTPUT_FILE = config.OUTPUT_FILE
