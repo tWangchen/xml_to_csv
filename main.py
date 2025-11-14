@@ -51,6 +51,8 @@ def xml_to_data(input_xml, namespaces, xpath_list) -> list:
 def data_to_csv(xpath_list, data, output_csv) -> None:
     csv_headers = [xpath[1] for xpath in xpath_list]
     df = pd.DataFrame(data, columns=csv_headers)
+    df["ecatid"] = pd.to_numeric(df["ecatid"], errors="coerce").astype("Int64")
+    df = df.sort_values(by="ecatid", ascending=False)
     df.to_csv(output_csv, index=False, encoding="utf-8")
 
 

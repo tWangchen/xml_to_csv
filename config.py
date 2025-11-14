@@ -4,9 +4,10 @@ CHUNKSIZE = 10000
 
 DATA_DIR = Path(__file__).resolve().parent / "downloads"
 # Change this to your input dump flat-file(CSV) file path
-INPUT_FILE = DATA_DIR / "metadata-dump-10-records.csv"
+INPUT_FILE_NAME = Path(r"metadata-dump-10-records.csv")
+INPUT_FILE = DATA_DIR / INPUT_FILE_NAME
 # Optionally change this to your output CSV file path
-OUTPUT_FILE = DATA_DIR / "metadata-dump-transformed-output.csv"
+OUTPUT_FILE = DATA_DIR / f"{INPUT_FILE_NAME.stem}-transformed.csv"
 
 LOG_FILE = DATA_DIR / "xml_to_csv.log"
 
@@ -44,7 +45,7 @@ XPATH_LIST = [
         "datastoragelink",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:descriptiveKeywords/mri:MD_Keywords[1]/mri:keyword[1]/gco:CharacterString[1]/text()",
+        "//mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords/mri:MD_Keywords/mri:keyword/gco:CharacterString/text()",
         "keywords",
     ),
     (
@@ -59,18 +60,22 @@ XPATH_LIST = [
         "/mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[1]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
         "pid",
     ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
-        "doi",
-    ),
     # (
-    #     "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gcx:Anchor/text()",
-    #     "doi_alternate_1",
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
+    #     "doi_from_string",
     # ),
     # (
     #     "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gcx:Anchor/@xlink:href",
-    #     "doi_alternate_2",
+    #     "doi_from_href",
     # ),
+    (
+        """
+        //mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()
+        |
+        /mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gcx:Anchor/@xlink:href
+        """,
+        "doi",
+    ),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints/mco:MD_LegalConstraints/mco:otherConstraints/gco:CharacterString/text()",
         "copyright_statement",
