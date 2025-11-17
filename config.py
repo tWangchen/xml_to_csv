@@ -1,6 +1,6 @@
 from pathlib import Path
 
-CHUNKSIZE = 10000
+BATCH_SIZE = 10000
 
 DATA_DIR = Path(__file__).resolve().parent / "downloads"
 # Change this to your input dump flat-file(CSV) file path
