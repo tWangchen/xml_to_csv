@@ -10,7 +10,7 @@
 ## Usage
 
 ### Configure input parameters in the code:
-- `INPUT_FILE`: Path to the input XML dump flat-file  
+- `INPUT_FILE`: Path to the input XML dump flat-file. This can be set as environment variable.  
 - `OUTPUT_FILE`: Path to the output CSV file  
 - `NAMESPACES`: Dictionary mapping namespace prefixes to URIs  
 - `XPATH_LIST`: List of tuples containing XPath expressions and field names  
@@ -26,7 +26,7 @@ example: `docker run --platform linux/amd64 -v "/Users/twangchen/Documents/GitHu
 
 ## Dependencies
 - Python 3.x 
-- pandas
+- Polars
 - lxml 
 
 

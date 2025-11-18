@@ -1,13 +1,16 @@
+import os
 from pathlib import Path
 
 BATCH_SIZE = 10000
 
 DATA_DIR = Path(__file__).resolve().parent / "downloads"
-# Change this to your input dump flat-file(CSV) file path
-INPUT_FILE_NAME = Path(r"metadata-dump-10-records.csv")
-INPUT_FILE = DATA_DIR / INPUT_FILE_NAME
-# Optionally change this to your output CSV file path
-OUTPUT_FILE = DATA_DIR / f"{INPUT_FILE_NAME.stem}-transformed.csv"
+
+# You can set the INPUT_FILE environment variable to change the input file path or it will default to the file in the data directory.
+INPUT_FILE = Path(
+    rf"{os.environ.get('INPUT_FILE', f'{DATA_DIR / "metadata-dump-10-records.csv"}')}"
+)
+
+OUTPUT_FILE = DATA_DIR / f"{INPUT_FILE.stem}-transformed.csv"
 
 LOG_FILE = DATA_DIR / "xml_to_csv.log"
 
