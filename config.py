@@ -52,7 +52,7 @@ XPATH_LIST = [
         "keywords",
     ),
     (
-        "/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode[1]/@codeListValue",
+        "/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue",
         "metadatascopecode",
     ),
     (
