@@ -1,10 +1,10 @@
 [project]
 name = "xml-to-csv"
 version = "0.1.0"
-description = "Converst XML files to CSV format."
+description = "Python tool to convert XML to CSV."
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "lxml>=6.0.2",
-    "pandas>=2.3.3",
+    "polars>=1.35.2",
 ]

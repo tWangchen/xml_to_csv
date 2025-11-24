@@ -4,7 +4,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 WORKDIR /app
 
-COPY xml_to_csv_bulk_pandas.py .
+COPY main.py .
 COPY config.py .
 COPY *.toml .
 COPY uv.lock .
@@ -13,4 +13,4 @@ COPY uv.lock .
 # Directory to mount volume
 RUN mkdir -p /app/downloads
 
-CMD [ "uv", "run", "xml_to_csv_bulk_pandas.py" ]
+CMD [ "uv", "run", "main.py" ]
