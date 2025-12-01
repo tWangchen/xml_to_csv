@@ -15,8 +15,8 @@ logger.addHandler(file_handler)
 # Define the chunk size (number of rows to process at a time)
 CHUNKSIZE = 10000
 
-INPUT_FILE = f"./downloads/metadata-dump-prod.csv"
-OUTPUT_FILE = f"./downloads/metadata-dump-prod-output-group-1.csv"
+INPUT_FILE = f"./downloads/metadata-dump.csv"
+OUTPUT_FILE = f"./downloads/metadata-dump-output-group-1.csv"
 
 NAMESPACES = {
     "cit": "http://standards.iso.org/iso/19115/-3/cit/2.0",
@@ -271,7 +271,7 @@ def main() -> None:
         data_to_csv(xpath_list=XPATH_LIST, data=data_full, output_csv=OUTPUT_FILE)
 
         logger.info(
-            f"Completed {index+1} rows in {time.perf_counter() - start:0.2f} seconds."
+            f"Completed {index + 1} rows in {time.perf_counter() - start:0.2f} seconds."
         )
     except Exception as e:
         logger.exception(f"Error processing {INPUT_FILE}: {e}")

@@ -1,5 +1,18 @@
-INPUT_FILE = f"./downloads/metadata-dump-prod.csv"
-OUTPUT_FILE = f"./downloads/metadata-dump-prod-output.csv"
+import os
+from pathlib import Path
+
+BATCH_SIZE = 10000
+
+DATA_DIR = Path(__file__).resolve().parent / "downloads"
+
+# You can set the INPUT_FILE environment variable to change the input file path or it will default to the file in the data directory.
+INPUT_FILE = Path(
+    rf"{os.environ.get('INPUT_FILE', f'{DATA_DIR / "metadata-dump-10-records.csv"}')}"
+)
+
+OUTPUT_FILE = DATA_DIR / f"{INPUT_FILE.stem}-transformed.csv"
+
+LOG_FILE = DATA_DIR / "xml_to_csv.log"
 
 # XPath expressions and namespaces for parsing ISO 19115-3 metadata XML files
 # Note: Attempting to keep it minimal and clean, I may not have the complete namespace.
@@ -17,6 +30,8 @@ NAMESPACES = {
     "mmi": "http://standards.iso.org/iso/19115/-3/mmi/1.0",
     "srv": "http://standards.iso.org/iso/19115/-3/srv/2.1",
     "mrs": "http://standards.iso.org/iso/19115/-3/mrs/1.0",
+    "gcx": "http://standards.iso.org/iso/19115/-3/gcx/1.0",
+    "xlink": "http://www.w3.org/1999/xlink",
 }
 
 XPATH_LIST = [
@@ -29,124 +44,76 @@ XPATH_LIST = [
         "title",
     ),
     (
-        "//mdb:MD_Metadata/mdb:metadataScope[1]/mdb:MD_MetadataScope[1]/mdb:resourceScope[1]/mcc:MD_ScopeCode[1]/@codeListValue",
-        "metadatascopecode",
-    ),
-    (
-        "/mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceFormat[1]/mrd:MD_Format[1]/mrd:formatSpecificationCitation[1]/cit:CI_Citation[1]/cit:onlineResource[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()",
+        "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:resourceFormat/mrd:MD_Format/mrd:formatSpecificationCitation/cit:CI_Citation/cit:onlineResource/cit:CI_OnlineResource/cit:linkage/gco:CharacterString/text()",
         "datastoragelink",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:descriptiveKeywords/mri:MD_Keywords[1]/mri:keyword[1]/gco:CharacterString[1]/text()",
+        "//mdb:MD_Metadata/mdb:identificationInfo/*/mri:descriptiveKeywords/mri:MD_Keywords/mri:keyword/gco:CharacterString/text()",
         "keywords",
     ),
     (
-        "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions[1]/mrd:onLine[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()",
-        "distributionlink",
+        "/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:resourceScope/mcc:MD_ScopeCode/@codeListValue",
+        "metadatascopecode",
     ),
     (
-        "/mdb:MD_Metadata/mdb:metadataScope[1]/mdb:MD_MetadataScope[1]/mdb:name[1]/gco:CharacterString[1]/text()",
+        "/mdb:MD_Metadata/mdb:metadataScope/mdb:MD_MetadataScope/mdb:name/gco:CharacterString/text()",
         "scopecodename",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[1]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
+        "/mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[1]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
         "pid",
     ),
+    # (
+    #     "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
+    #     "doi_from_string",
+    # ),
+    # (
+    #     "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gcx:Anchor/@xlink:href",
+    #     "doi_from_href",
+    # ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
+        """
+        //mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:citation[1]/cit:CI_Citation[1]/cit:identifier[2]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()
+        |
+        /mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gcx:Anchor/@xlink:href
+        """,
         "doi",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:otherConstraints[1]/gco:CharacterString[1]/text()",
+        "//mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints/mco:MD_LegalConstraints/mco:otherConstraints/gco:CharacterString/text()",
         "copyright_statement",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:useConstraints[1]/mco:MD_RestrictionCode[1]/@codeListValue",
+        "//mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints/mco:MD_LegalConstraints/mco:useConstraints/mco:MD_RestrictionCode/@codeListValue",
         "copyright_use_constraints",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:status[1]/mcc:MD_ProgressCode[1]/@codeListValue",
+        "/mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:purpose[1]/gco:CharacterString[1]/text()",
         "purpose",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:status[1]/mcc:MD_ProgressCode[1]/@codeListValue",
+        "/mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:status[1]/mcc:MD_ProgressCode[1]/@codeListValue",
         "status",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:westBoundLongitude[1]/gco:Decimal[1]/text()",
-        "geographicalextent_west",
+        "//mdb:distributionInfo//mrd:MD_DigitalTransferOptions//cit:linkage/gco:CharacterString/text()",
+        "distributionlink",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:eastBoundLongitude[1]/gco:Decimal[1]/text()",
-        "geographicalextent_east",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:southBoundLatitude[1]/gco:Decimal[1]/text()",
-        "geographicalextent_south",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:extent[1]/gex:EX_Extent[1]/gex:geographicElement[1]/gex:EX_GeographicBoundingBox[1]/gex:northBoundLatitude[1]/gco:Decimal[1]/text()",
-        "geographicalextent_north",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:title[1]/gco:CharacterString[1]/text()",
-        "license_title",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:alternateTitle[1]/gco:CharacterString[1]/text()",
-        "license_alternatetitle",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:edition[1]/gco:CharacterString[1]/text()",
-        "license_edition",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:onlineResource[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()",
-        "license_onlineurl",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions[1]/mrd:onLine[1]/cit:CI_OnlineResource[1]/cit:name[1]/gco:CharacterString[1]/text()",
-        "distribution_name",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions[1]/mrd:onLine[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()",
-        "distribution_url",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions/mrd:MD_DigitalTransferOptions[1]/mrd:distributionFormat[1]/mrd:MD_Format[1]/mrd:formatSpecificationCitation[1]/cit:CI_Citation[1]/cit:title[1]/gco:CharacterString[1]/text()",
-        "distribution_format",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:associatedResource/mri:MD_AssociatedResource[1]/mri:associationType[1]/mri:DS_AssociationTypeCode[1]/@codeListValue",
-        "associatedresources_type",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:associatedResource/mri:MD_AssociatedResource[1]/mri:metadataReference[1]/cit:CI_Citation[1]/cit:identifier[1]/mcc:MD_Identifier[1]/mcc:code[1]/gco:CharacterString[1]/text()",
-        "associatedresources_ecatid",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:associatedResource/mri:MD_AssociatedResource[1]/mri:metadataReference[1]/cit:CI_Citation[1]/cit:title[1]/gco:CharacterString[1]/text()",
-        "associatedresources_ecat_title",
+        "//mdb:distributionInfo//mrd:MD_DigitalTransferOptions//gco:CharacterString/text()",
+        "distribution_info",
     ),
     (
         "//mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:resourceMaintenance[1]/mmi:MD_MaintenanceInformation[1]/mmi:maintenanceAndUpdateFrequency[1]/mmi:MD_MaintenanceFrequencyCode[1]/@codeListValue",
         "maintenance_frequency",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:date[2]/cit:CI_Date[1]/cit:date[1]/gco:DateTime[1]/text()",
-        "publication_date",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:date[2]/cit:CI_Date[1]/cit:dateType[1]/cit:CI_DateTypeCode[1]/@codeListValue",
-        "publication_typecode",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:date[1]/cit:CI_Date[1]/cit:date[1]/gco:DateTime[1]/text()",
-        "creation_date",
-    ),
-    (
-        "//mdb:MD_Metadata/mdb:identificationInfo[1]/mri:MD_DataIdentification[1]/mri:citation[1]/cit:CI_Citation[1]/cit:date[1]/cit:CI_Date[1]/cit:dateType[1]/cit:CI_DateTypeCode[1]/@codeListValue",
-        "creation_typecode",
+        """
+        //mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/cit:CI_Citation/cit:date/cit:CI_Date/cit:date/*/text()
+        |
+        //mdb:MD_Metadata/mdb:identificationInfo/*/mri:citation/cit:CI_Citation/cit:date/cit:CI_Date/cit:dateType/cit:CI_DateTypeCode/@codeListValue
+        """,
+        "resource_dates",
     ),
     (
         "//mdb:MD_Metadata/mdb:distributionInfo[1]/mrd:MD_Distribution[1]/mrd:distributor[1]/mrd:MD_Distributor[1]/mrd:distributorTransferOptions[2]/mrd:MD_DigitalTransferOptions[1]/mrd:onLine[1]/cit:CI_OnlineResource[1]/cit:description[1]/gco:CharacterString[1]/text()",
@@ -196,6 +163,28 @@ XPATH_LIST = [
     (
         "/mdb:MD_Metadata/mdb:metadataIdentifier/mcc:MD_Identifier/mcc:code/gco:CharacterString/text()",
         "uuid",
+    ),
+    (
+        """//mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints[1]/mco:MD_LegalConstraints/mco:reference/cit:CI_Citation/*/gco:CharacterString/text() 
+        |
+        //mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:onlineResource[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()
+        """,
+        "license",
+    ),
+    (
+        "/mdb:MD_Metadata/mdb:identificationInfo/*/mri:extent/gex:EX_Extent/gex:geographicElement/gex:EX_GeographicBoundingBox/*/gco:Decimal/text()",
+        "geographicalextent_w_e_s_n",
+    ),
+    # Combined XPath for associated resources
+    (
+        """
+        //mdb:MD_Metadata/mdb:identificationInfo/*/mri:associatedResource/mri:MD_AssociatedResource/mri:associationType/mri:DS_AssociationTypeCode/@codeListValue
+        |
+        //mdb:MD_Metadata/mdb:identificationInfo/*/mri:associatedResource/mri:MD_AssociatedResource/mri:metadataReference/cit:CI_Citation/cit:title/gco:CharacterString/text()
+        |
+        //mdb:MD_Metadata/mdb:identificationInfo/*/mri:associatedResource/mri:MD_AssociatedResource/mri:metadataReference/cit:CI_Citation/cit:identifier/mcc:MD_Identifier/mcc:code/gco:CharacterString/text()
+        """,
+        "associatedresources_type_title_ecatid_uuid",
     ),
     # Long text fields after this line.
     (
