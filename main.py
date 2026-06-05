@@ -50,10 +50,12 @@ def xml_to_data(input_xml, namespaces, xpath_list) -> list:
 
 def data_to_csv(xpath_list, data, output_csv) -> None:
     csv_headers = [xpath[1] for xpath in xpath_list]
-    df = pl.DataFrame(data, schema=csv_headers, orient="row")
+    # Define schema with all columns as String to handle mixed values
+    schema = {col: pl.Utf8 for col in csv_headers}
+    df = pl.DataFrame(data, schema=schema, orient="row")
     df = df.with_columns(pl.col("ecatid").cast(pl.Int64))
     df = df.sort("ecatid", descending=True)
-    # df.limit(1000).write_csv(output_csv, include_header=True)
+    # df = df.limit(100)  # Limit row for testing
     df.write_csv(output_csv, include_header=True)
 
 
