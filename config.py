@@ -125,7 +125,7 @@ XPATH_LIST = [
         "pointofcontact_role",
     ),
     (
-        "//mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()",
+        "//mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:pointOfContact/cit:CI_Responsibility/cit:party//cit:name/gco:CharacterString/text()",
         "pointofcontact_value",
     ),
     (
@@ -133,7 +133,7 @@ XPATH_LIST = [
         "metadata_contact_role",
     ),
     (
-        "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party/*/cit:name/gco:CharacterString/text()",
+        "//mdb:MD_Metadata/mdb:contact/cit:CI_Responsibility/cit:party//cit:name/gco:CharacterString/text()",
         "metadata_contact_value",
     ),
     (
