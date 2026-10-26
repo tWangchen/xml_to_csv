@@ -165,6 +165,14 @@ XPATH_LIST = [
         "uuid",
     ),
     (
+        "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:ISBN/gco:CharacterString/text()",
+        "isbn",
+    ),
+    (
+        "/mdb:MD_Metadata/mdb:identificationInfo/mri:MD_DataIdentification/mri:citation/cit:CI_Citation/cit:ISSN/gco:CharacterString/text()",
+        "issn",
+    ),
+    (
         """//mdb:MD_Metadata/mdb:identificationInfo/*/mri:resourceConstraints[1]/mco:MD_LegalConstraints/mco:reference/cit:CI_Citation/*/gco:CharacterString/text() 
         |
         //mdb:MD_Metadata/mdb:identificationInfo[1]/*/mri:resourceConstraints[1]/mco:MD_LegalConstraints[1]/mco:reference[1]/cit:CI_Citation[1]/cit:onlineResource[1]/cit:CI_OnlineResource[1]/cit:linkage[1]/gco:CharacterString[1]/text()
